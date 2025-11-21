@@ -19,6 +19,11 @@ export const filmScoresQuery = groq`
     title,
     description,
     thumbnail,
+    videoFile {
+      asset-> {
+        url
+      }
+    },
     videoUrl,
     platform,
     year,
@@ -32,6 +37,11 @@ export const videoProjectsQuery = groq`
     title,
     description,
     thumbnail,
+    videoFile {
+      asset-> {
+        url
+      }
+    },
     videoUrl,
     platform,
     category,

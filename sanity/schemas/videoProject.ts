@@ -19,19 +19,38 @@ export default defineType({
     }),
     defineField({
       name: 'thumbnail',
-      title: 'Thumbnail Image',
+      title: 'Thumbnail Image (Optional)',
       type: 'image',
       options: {
         hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
+      description: 'Not needed - video will auto-play',
+    }),
+    defineField({
+      name: 'videoFile',
+      title: 'Video File (Upload)',
+      type: 'file',
+      options: {
+        accept: 'video/*',
+      },
+      description: 'Upload a video file directly to Sanity. Use this OR Video URL below, not both.',
     }),
     defineField({
       name: 'videoUrl',
-      title: 'Video URL',
+      title: 'Video URL (External)',
       type: 'url',
-      description: 'YouTube, Vimeo, or other video URL',
-      validation: (Rule) => Rule.required(),
+      description: 'YouTube, Vimeo, or other video URL. Use this OR Video File above, not both.',
+      validation: (Rule) =>
+        Rule.custom((videoUrl, context) => {
+          const videoFile = (context.document as any)?.videoFile
+          if (!videoUrl && !videoFile) {
+            return 'Either Video File or Video URL is required'
+          }
+          if (videoUrl && videoFile) {
+            return 'Please use either Video File or Video URL, not both'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'platform',
@@ -44,7 +63,8 @@ export default defineType({
           { title: 'Other', value: 'other' },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      description: 'Only required if using Video URL',
+      hidden: ({ document }) => !!document?.videoFile,
     }),
     defineField({
       name: 'category',
@@ -65,6 +85,12 @@ export default defineType({
       title: 'Year',
       type: 'number',
       validation: (Rule) => Rule.min(1900).max(new Date().getFullYear() + 1),
+    }),
+    defineField({
+      name: 'publishDate',
+      title: 'Publish Date',
+      type: 'date',
+      description: 'Date the project was published or released',
     }),
     defineField({
       name: 'order',

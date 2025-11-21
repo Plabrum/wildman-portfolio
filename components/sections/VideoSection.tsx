@@ -1,18 +1,21 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { VideoPlayer } from '@/components/VideoPlayer'
-import { urlFor } from '@/sanity/lib/image'
 
 interface VideoProject {
   _id: string
   title: string
   description?: string
-  thumbnail: any
-  videoUrl: string
-  platform: string
+  videoFile?: {
+    asset?: {
+      url: string
+    }
+  }
+  videoUrl?: string
+  platform?: string
   category?: string
   year?: number
+  publishDate?: string
 }
 
 interface VideoSectionProps {
@@ -26,31 +29,39 @@ export function VideoSection({ videoProjects }: VideoSectionProps) {
         <h2 className="text-[clamp(40px,8vw,80px)] font-extrabold leading-none tracking-tight text-black mb-12">
           Video
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {videoProjects.map((project) => (
-            <Card key={project._id} className="bg-primary rounded-2xl shadow-sm p-6 space-y-4 border-2 border-black">
-              <div>
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-2xl font-bold text-black">{project.title}</h3>
-                  {project.category && (
-                    <span className="text-xs uppercase font-semibold text-black opacity-60 px-2 py-1 bg-primary-light rounded">
-                      {project.category}
+            <div key={project._id} className="space-y-3">
+              {/* Video Player */}
+              <VideoPlayer
+                url={project.videoUrl}
+                videoFileUrl={project.videoFile?.asset?.url}
+                platform={project.platform}
+              />
+
+              {/* Title/Date and Description below player */}
+              <div className="text-left">
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="font-bold font-mono text-black text-lg uppercase leading-tight">
+                    {project.title}
+                  </h3>
+                  {project.publishDate && (
+                    <span className="font-mono text-sm text-black opacity-60 whitespace-nowrap">
+                      {new Date(project.publishDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                      })}
                     </span>
                   )}
                 </div>
-                {project.year && (
-                  <p className="text-sm text-black opacity-60 mb-3">{project.year}</p>
-                )}
                 {project.description && (
-                  <p className="text-sm text-black mb-4">{project.description}</p>
+                  <p className="font-mono text-sm text-black opacity-80 mt-0.5">
+                    {project.description}
+                  </p>
                 )}
               </div>
-              <VideoPlayer
-                url={project.videoUrl}
-                platform={project.platform}
-                thumbnail={project.thumbnail ? urlFor(project.thumbnail).width(800).height(450).url() : undefined}
-              />
-            </Card>
+            </div>
           ))}
         </div>
       </div>

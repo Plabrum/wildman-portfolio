@@ -1,6 +1,6 @@
 import { Navigation } from '@/components/Navigation'
 import { HeroSection } from '@/components/sections/HeroSection'
-import { MusicSection } from '@/components/sections/MusicSectionNew'
+import { MusicSection } from '@/components/sections/MusicSection'
 import { VideoSection } from '@/components/sections/VideoSection'
 import { Footer } from '@/components/sections/Footer'
 import { client } from '@/sanity/lib/client'
