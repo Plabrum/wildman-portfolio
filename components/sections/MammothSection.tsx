@@ -27,12 +27,13 @@ export function MammothSection({ mammoth }: MammothSectionProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Image on the left */}
-          <div className="relative aspect-square w-full overflow-hidden rounded-xl border-2 border-black">
+          <div className="relative w-full overflow-hidden rounded-xl border-2 border-black">
             <Image
-              src={urlFor(mammoth.image).width(800).height(800).url()}
+              src={urlFor(mammoth.image).width(800).url()}
               alt={mammoth.title}
-              fill
-              className="object-cover"
+              width={800}
+              height={1200}
+              className="w-full h-auto"
             />
           </div>
 

@@ -48,10 +48,10 @@ export default async function Home() {
       {(albums.length > 0 || filmScores.length > 0) && (
         <MusicSection albums={albums} filmScores={filmScores} />
       )}
-      {/* Mammoth section */}
-      <MammothSection mammoth={mammoth} />
       {/* Video section */}
       {videoProjects.length > 0 && <VideoSection videoProjects={videoProjects} />}
+      {/* Mammoth section */}
+      <MammothSection mammoth={mammoth} />
       <Footer
         email={siteSettings.email}
         socialLinks={siteSettings.socialLinks}

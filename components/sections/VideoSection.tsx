@@ -24,7 +24,7 @@ interface VideoSectionProps {
 
 export function VideoSection({ videoProjects }: VideoSectionProps) {
   return (
-    <section id="video" className="min-h-screen py-20 bg-primary-light">
+    <section id="video" className="min-h-screen py-20 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-[clamp(40px,8vw,80px)] font-extrabold leading-none tracking-tight text-black mb-12">
           Video
